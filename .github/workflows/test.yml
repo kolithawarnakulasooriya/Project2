@@ -25,4 +25,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run step_model_training script
-        run: python step_model_training.py
+        run: python step_model_evaluation.py
