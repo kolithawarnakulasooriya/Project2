@@ -1,0 +1,11 @@
+# Ignore dataset directory
+dataset/
+
+# Ignore model weight files
+fashin.pth
+
+# Ignore Python virtual environments
+venv/
+.env
+__pycache__/
+*.pyc

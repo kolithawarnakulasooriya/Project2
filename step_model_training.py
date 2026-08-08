@@ -8,7 +8,7 @@ from model import CNNModel
 root_dir = Path.cwd()
 
 dataset = torchvision.datasets.FashionMNIST(root=f"{root_dir}/dataset", train=True, download=True, transform=getTransforms())
-dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=32, shuffle=True, num_workers=2)
+dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=32, shuffle=True)
 
 model: torch.nn.Module = CNNModel()
 
