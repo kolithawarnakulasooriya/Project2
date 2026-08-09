@@ -10,7 +10,7 @@ model.load_state_dict(torch.load(f"{root_dir}/fashin.pth", map_location=torch.de
 
 model.eval()
 
-dataset = torchvision.datasets.FashionMNIST(root=f"{root_dir}/dataset", train=False, transform=getTransforms())
+dataset = torchvision.datasets.FashionMNIST(root=f"{root_dir}/dataset", download=True, train=False, transform=getTransforms())
 dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=32, shuffle=False)
 
 torch.no_grad()
