@@ -6,7 +6,7 @@ from transform import getTransforms
 root_dir = Path.cwd()
 
 model = CNNModel()
-model.load_state_dict(torch.load(f"{root_dir}/fashin.pth"))
+model.load_state_dict(torch.load(f"{root_dir}/fashin.pth", map_location=torch.device('cpu')))
 
 model.eval()
 
