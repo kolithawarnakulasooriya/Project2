@@ -1,21 +1,15 @@
-# FashionMNIST CNN Project
+# FashionMNIST CNN (Project2)
 
-This repository contains a simple PyTorch-based FashionMNIST classification workflow with training, evaluation, and deployment steps.
+A compact PyTorch pipeline for training, evaluating, and serving a CNN on the FashionMNIST dataset.
 
-## Project Structure
+## Requirements
 
-- `step_model_training.py` - trains the `CNNModel` on FashionMNIST and saves weights to `fashin.pth`
-- `step_model_evaluation.py` - evaluates the trained model on the FashionMNIST test set
-- `step_model_deploy.py` - FastAPI app for serving predictions using the trained weights
-- `model.py` - CNN model definition
-- `transform.py` - image preprocessing pipeline
-- `requirements.txt` - Python dependencies
-- `.github/workflows/train.yml` - GitHub Actions workflow for running model training
-- `.gitignore` - ignores dataset directory, `fashin.pth`, and virtual environment files
+- Python 3.8+
+- See `requirements.txt` for exact pinned dependencies
 
-## Setup
+## Quick start
 
-1. Create and activate a Python virtual environment:
+1. Create & activate a virtual environment:
 
 ```bash
 python3 -m venv .venv
@@ -29,44 +23,53 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-3. Install the app server if you want to run deployment locally:
+3. (Optional) Prepare the dataset directory if you want to provide local data: place files under `dataset/`.
 
-```bash
-pip install "uvicorn[standard]"
-```
+## Project structure
+
+- `src/train.py` — training entrypoint (downloads/uses FashionMNIST, saves model weights)
+- `src/evaluation.py` — evaluation script that loads saved weights and reports metrics
+- `src/service.py` — FastAPI app for serving predictions
+- `src/lib/model.py` — model definition
+- `src/lib/transform.py` — image preprocessing pipeline
+- `src/lib/data.py` — dataset helpers and loaders
+- `src/lib/utils.py` — utility functions
+- `requirements.txt` — Python dependencies
+- `dataset/` — optional local dataset directory (gitignored)
 
 ## Usage
 
-### Train the model
+Train the model:
 
 ```bash
-python step_model_training.py
+python src/train.py
 ```
 
-This will download FashionMNIST, train the model, and save the weights to `fashin.pth`.
-
-### Evaluate the model
+Evaluate the model:
 
 ```bash
-python step_model_evaluation.py
+python src/evaluation.py
 ```
 
-This will load `fashin.pth` and evaluate model accuracy on the test dataset.
-
-### Deploy the model
+Run the API server (development):
 
 ```bash
-uvicorn step_model_deploy:app --reload --host 0.0.0.0 --port 8000
+uvicorn src.service:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Then send a POST request to `/predict` with an image file to get a prediction.
+Then POST an image file to the `/predict` endpoint to receive a classification.
 
-## GitHub Actions
+## Development notes
 
-The repository includes a workflow at `.github/workflows/train.yml` that runs `step_model_training.py` on pushes to `main` and supports manual dispatch.
+- Model weights are saved/loaded by the training and evaluation scripts; check `src/train.py` for the exact filename and location.
+- Use `dataset/` for local dataset overrides — the code falls back to downloading FashionMNIST if data is not present.
+- Add or update dependencies in `requirements.txt` and re-run `pip install -r requirements.txt`.
 
-## Notes
+If you'd like, I can also:
 
-- The dataset directory is ignored by `.gitignore`.
-- The trained model file `fashin.pth` is also ignored.
-- If you need to stop tracking files already committed, use `git rm --cached <path>`.
+- add a short example `curl` request for the `/predict` endpoint,
+- or run the test/train script to verify everything works in your environment.
+
+---
+
+Updated to match the current `src/` layout and usage commands.
