@@ -25,4 +25,8 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run step_model_training script
+<<<<<<< HEAD
         run: python step_model_evaluation.py
+=======
+        run: python src/evaluation.py
+>>>>>>> 39c2d81 (Add initial implementation of FashionMNIST CNN project with training, evaluation, and deployment scripts)
